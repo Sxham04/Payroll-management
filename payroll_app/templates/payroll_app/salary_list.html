@@ -1,30 +1,55 @@
 {% extends 'payroll_app/base.html' %}
-
 {% block content %}
-    <h2>Processed Salary Records</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Employee</th>
-                <th>Month/Year</th>
-                <th>Gross Pay</th>
-                <th>Tax Deduction</th>
-                <th>Net Pay</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for record in salaries %}
-            <tr>
-                <td>{{ record.employee }}</td>
-                <td>{{ record.month }}/{{ record.year }}</td>
-                <td>${{ record.gross_pay }}</td>
-                <td>${{ record.tax_deducted }}</td>
-                <td><strong>${{ record.net_pay }}</strong></td>
-                <td><a href="{% url 'payslip_detail' record.id %}">View Payslip</a></td>
-            </tr>
-            {% empty %}
-            <tr><td colspan="5">No salary records found.</td></tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="card p-4 shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Payroll History</h2>
+        <a href="{% url 'manage_employees' %}" class="btn btn-sm btn-primary">Process New Salary</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Employee</th>
+                    <th>Period</th>
+                    <th class="text-center">Gross Salary</th>
+                    <th class="text-center text-danger">Tax Deduction</th>
+                    <th class="text-center fw-bold">Net Pay</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in salaries %}
+                <tr>
+                    <td>
+                        <div class="fw-bold">{{ record.employee.first_name }} {{ record.employee.last_name }}</div>
+                        <small class="text-muted">ID: {{ record.employee.emp_id }}</small>
+                    </td>
+                    <td>
+                        <span class="badge bg-light text-dark border">
+                            {{ record.month }}/{{ record.year }}
+                        </span>
+                    </td>
+                    <td class="text-center">${{ record.gross_pay|floatformat:2 }}</td>
+                    <td class="text-center text-danger">-${{ record.tax_deducted|floatformat:2 }}</td>
+                    <td class="text-center">
+                        <span class="text-success fw-bold">${{ record.net_pay|floatformat:2 }}</span>
+                    </td>
+                    <td class="text-end">
+                        <a href="{% url 'payslip_detail' record.id %}" class="btn btn-sm btn-outline-dark">
+                            <i class="bi bi-printer"></i> View Payslip
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-5 text-muted">
+                        No salary records found. Go to "Manage Staff" to process payroll.
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

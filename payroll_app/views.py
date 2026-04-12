@@ -58,3 +58,7 @@ def payslip_detail(request, pk):
 
 def dashboard(request):
     return render(request, 'payroll_app/dashboard.html')
+
+def manage_employees(request):
+    employees = Employee.objects.all()
+    return render(request, 'payroll_app/manage_employees.html', {'employees': employees})
