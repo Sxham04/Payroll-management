@@ -1,0 +1,45 @@
+{% extends 'payroll_app/base.html' %}
+{% block content %}
+<div class="card p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Daily Attendance</h2>
+        <span class="badge bg-secondary p-2">{{ date|date:"D, d M Y" }}</span>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Full Name</th>
+                        <th class="text-center">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emp in employees %}
+                    <tr>
+                        <td><span class="text-muted fw-bold">{{ emp.emp_id }}</span></td>
+                        <td>{{ emp.first_name }} {{ emp.last_name }}</td>
+                        <td class="text-center">
+                            <div class="btn-group" role="group" aria-label="Attendance status">
+                                <input type="radio" class="btn-check" name="status_{{ emp.id }}" id="present_{{ emp.id }}" value="Present" checked>
+                                <label class="btn btn-outline-success btn-sm" for="present_{{ emp.id }}">Present</label>
+
+                                <input type="radio" class="btn-check" name="status_{{ emp.id }}" id="absent_{{ emp.id }}" value="Absent">
+                                <label class="btn btn-outline-danger btn-sm" for="absent_{{ emp.id }}">Absent</label>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-4 border-top pt-3 text-end">
+            <a href="{% url 'dashboard' %}" class="btn btn-light me-2">Cancel</a>
+            <button type="submit" class="btn btn-primary px-5">Save All Records</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

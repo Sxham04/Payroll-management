@@ -1,0 +1,30 @@
+{% extends 'payroll_app/base.html' %}
+
+{% block content %}
+    <h2>Processed Salary Records</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Month/Year</th>
+                <th>Gross Pay</th>
+                <th>Tax Deduction</th>
+                <th>Net Pay</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in salaries %}
+            <tr>
+                <td>{{ record.employee }}</td>
+                <td>{{ record.month }}/{{ record.year }}</td>
+                <td>${{ record.gross_pay }}</td>
+                <td>${{ record.tax_deducted }}</td>
+                <td><strong>${{ record.net_pay }}</strong></td>
+                <td><a href="{% url 'payslip_detail' record.id %}">View Payslip</a></td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5">No salary records found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'payroll_app/base.html' %}
+{% block content %}
+<div style="border: 2px solid #333; padding: 30px; background: white;">
+    <h1 style="text-align: center;">OFFICIAL PAYSLIP</h1>
+    <hr>
+    <p><strong>Employee:</strong> {{ record.employee.first_name }} {{ record.employee.last_name }}</p>
+    <p><strong>Employee ID:</strong> {{ record.employee.emp_id }}</p>
+    <p><strong>Period:</strong> {{ record.month }}/{{ record.year }}</p>
+    <hr>
+    <h3>Earnings</h3>
+    <p>Basic Salary: ${{ record.employee.base_salary }}</p>
+    <p>Gross Calculated: ${{ record.gross_pay|floatformat:2 }}</p>
+    <hr>
+    <h3>Deductions</h3>
+    <p>Tax Withheld: -${{ record.tax_deducted|floatformat:2 }}</p>
+    <hr>
+    <h2>Net Pay: ${{ record.net_pay|floatformat:2 }}</h2>
+    <button onclick="window.print()">Print Payslip</button>
+</div>
+{% endblock %}

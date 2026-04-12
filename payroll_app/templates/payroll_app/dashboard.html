@@ -1,0 +1,26 @@
+{% extends 'payroll_app/base.html' %}
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="card p-4 text-center">
+            <h5 class="text-muted">Attendance</h5>
+            <p class="small">Log daily presence for calculations.</p>
+            <a href="{% url 'mark_attendance' %}" class="btn btn-primary w-100">Open Module</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center">
+            <h5 class="text-muted">Payroll History</h5>
+            <p class="small">View and print official payslips.</p>
+            <a href="{% url 'salary_list' %}" class="btn btn-primary w-100">View Records</a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-4 text-center">
+            <h5 class="text-muted">Quick Actions</h5>
+            <p class="small">Manage employees and database.</p>
+            <a href="/admin/payroll_app/employee/add/" class="btn btn-outline-secondary w-100">Add Employee</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
