@@ -76,7 +76,7 @@ WSGI_APPLICATION = "payroll_system.wsgi.application"
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgres://user:pass@localhost:5432/payroll_db',
+        default='postgres://postgres:admin@localhost:5432/payroll_db',
         conn_max_age=600,
     )
 }
@@ -96,7 +96,7 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "soham": "admin",
     },
 ]
 
